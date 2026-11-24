@@ -9,7 +9,7 @@
 // @match        https://iwrite.unipus.cn/*
 // @run-at       document-start
 // @grant        none
-// @license      GPL-3.0
+// @license      GPL-3.0-or-later
 // ==/UserScript==
 
 /*

@@ -1,8 +1,17 @@
 # iWrite 粘贴解锁 Pro
 
 [![version](https://img.shields.io/badge/version-2.0.0-3E80F0)](CHANGELOG.md)
-[![license](https://img.shields.io/badge/license-GPL--3.0-green)](LICENSE)
-[![platform](https://img.shields.io/badge/platform-Tampermonkey-yellow)]()
+[![license](https://img.shields.io/badge/license-GPL--3.0--or--later-green)](LICENSE)
+[![platform](https://img.shields.io/badge/platform-Tampermonkey%20%7C%20ScriptCat-yellow)]()
+
+<p align="left">
+  <a href="https://github.com/Phiedeir/iwrite-paste-unlock/raw/main/iwrite-paste-unlock-pro.user.js">
+    <img alt="一键安装到 Tampermonkey（油猴）" src="https://img.shields.io/badge/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85-Tampermonkey%20%E6%B2%B9%E7%8C%B4-3E80F0?style=for-the-badge" height="44">
+  </a>
+  <a href="https://github.com/Phiedeir/iwrite-paste-unlock/raw/main/iwrite-paste-unlock-pro.user.js">
+    <img alt="一键安装到 ScriptCat（脚本猫）" src="https://img.shields.io/badge/%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85-ScriptCat%20%E8%84%9A%E6%9C%AC%E7%8C%AB-FF6B35?style=for-the-badge" height="44">
+  </a>
+</p>
 
 适配 **iWrite 爱写作（iwrite.unipus.cn）新版写作页** 的用户脚本：解除「该作业不允许复制粘贴 / 该作业不允许拖入内容」的限制，并附带一个与站点新 UI 视觉风格一致的悬浮工具面板。
 
@@ -60,19 +69,33 @@ Event.prototype.preventDefault = function () {
 - **SPA 兼容**：路由切换、组件重渲染后自动重新定位编辑器；非写作页自动隐藏面板
 - **旧版兼容**：若命中旧版 `/student/toSubmitTask` 页面，仍会挂 UEditor 的 `beforepaste` 钩子
 
-## 安装
+## 一键安装
 
-### 方式一：Tampermonkey（推荐）
+| 脚本管理器 | 直装（点击后由管理器接管） | 还没装？先装扩展 |
+| --- | --- | --- |
+| **Tampermonkey（油猴）** | [**▶ 点这里安装脚本**](https://github.com/Phiedeir/iwrite-paste-unlock/raw/main/iwrite-paste-unlock-pro.user.js) | [Chrome](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) · [Edge](https://microsoftedge.microsoft.com/addons/detail/iikmkjmpaadaobahmlepeloendndfphd) · [Firefox](https://addons.mozilla.org/firefox/addon/tampermonkey/) |
+| **ScriptCat（脚本猫）** | [**▶ 点这里安装脚本**](https://github.com/Phiedeir/iwrite-paste-unlock/raw/main/iwrite-paste-unlock-pro.user.js) | [Chrome](https://chromewebstore.google.com/detail/scriptcat/ndcooeababalnlpkfedmmbbbgkljhpjf) · [Edge](https://microsoftedge.microsoft.com/addons/detail/liilgpjgabokdklappibcjfablkpcekh) · [Firefox](https://addons.mozilla.org/zh-CN/firefox/addon/scriptcat/) |
 
-1. 浏览器安装 [Tampermonkey](https://www.tampermonkey.net/)
-2. 打开
-   `https://github.com/Phiedeir/iwrite-paste-unlock/raw/main/iwrite-paste-unlock-pro.user.js`
-   —— Tampermonkey 会弹出安装界面，点「安装」
-3. **刷新写作页**（必须刷新：脚本 `@run-at document-start`，要在页面 JS 之前打补丁）
+**流程**：点「点这里安装脚本」→ 浏览器下载 `iwrite-paste-unlock-pro.user.js` → 脚本管理器弹出安装页 → 点「安装」→ **刷新写作页**。
 
-手动方式：Tampermonkey 面板 →「添加新脚本」→ 清空模板 → 粘贴 [`iwrite-paste-unlock-pro.user.js`](iwrite-paste-unlock-pro.user.js) 全文 → 保存 → 刷新页面。
+> ⚠️ 必须刷新页面。脚本是 `@run-at document-start`，要在页面自身 JS 之前改写 `Event.prototype` 才能生效；已打开的旧标签页不会自动加载。
 
-### 方式二：控制台临时版（不装扩展）
+### 点击后没弹安装页？
+
+| 现象 | 原因 / 处理 |
+| --- | --- |
+| 浏览器直接把脚本当文本显示 | 管理器没接管这个 URL。确认扩展已启用；ScriptCat 需在设置里允许安装用户脚本 |
+| 两个管理器都装了，只有一个接管 | 正常。浏览器只会让一个处理 `.user.js`，装一个就够 |
+| 装完没反应 | 没刷新页面，或者装在了别的浏览器配置里（检查扩展当前 Profile） |
+| 公司/校园网拦截 GitHub | 用 jsDelivr 备用直链：`https://cdn.jsdelivr.net/gh/Phiedeir/iwrite-paste-unlock@main/iwrite-paste-unlock-pro.user.js` |
+
+### 手动方式
+
+**Tampermonkey**：面板 →「添加新脚本」→ 清空模板 → 粘贴 [`iwrite-paste-unlock-pro.user.js`](iwrite-paste-unlock-pro.user.js) 全文 → 保存 → 刷新页面。
+
+**ScriptCat**：面板 →「新建脚本」→ 粘贴同一份内容 → 保存 → 刷新页面。
+
+### 控制台临时版（不装扩展）
 
 打开写作页 → `F12` → Console → 粘贴 [`iwrite-unlock-console.js`](iwrite-unlock-console.js) 全文回车。立即生效，**刷新后失效**，需要重新执行。
 
@@ -122,4 +145,11 @@ iwrite-paste-unlock/
 
 ## License
 
-[GPL-3.0](LICENSE)
+[GPL-3.0-or-later](LICENSE)（SPDX: `GPL-3.0-or-later`）。简单说：可以自由使用、修改、再分发，但**修改后的版本也必须以 GPL 开源**，不能打包成闭源/收费软件分发。
+
+选它的原因：
+
+1. **与上游对齐** —— 本项目源自 [MagicMonkey-XK/XKScript](https://github.com/MagicMonkey-XK/XKScript) 的思路，上游脚本头声明 `GPL`，同族许可避免任何兼容性争议
+2. **用户脚本场景下几乎零成本** —— GPL 要求分发时附带源码，而用户脚本本身就是明文源码，等于没有额外义务
+3. **挡住「打包卖钱」** —— MIT 允许他人闭源转售，GPL 不允许；这类工具被二次包装成付费软件的情况很常见
+4. **被脚本站接受** —— Greasyfork / ScriptCat 都接受 GPL-3.0
